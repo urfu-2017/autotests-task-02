@@ -10,6 +10,7 @@
   "author": "Sergey Zhigalov <zhigalov@yandex-team.ru>",
   "license": "MIT",
   "devDependencies": {
+    "istanbul": "0.4.5",
     "mocha": "3.3.0",
     "nock": "9.0.13",
     "proxyquire": "1.7.11",
