@@ -60,16 +60,16 @@ describe('showTweets', () => {
 });
 
 describe('formatDate', () => {
-    const now = 1523536928232; // 2018.04.12 17:42:08.232
+    const now = 1523536928232; // 2018.04.12 12:42:08.232
     const testCases = [
-        { arg: now, expected: '17:42' },
+        { arg: now, expected: '12:42' },
         { arg: moment(now).startOf('day').toDate(), expected: '00:00' },
-        { arg: moment(now).subtract(1, 'days').toDate(), expected: 'Вчера в 17:42' },
+        { arg: moment(now).subtract(1, 'days').toDate(), expected: 'Вчера в 12:42' },
         { arg: moment(now).subtract(1, 'days').startOf('day').toDate(), expected: 'Вчера в 00:00' },
-        { arg: moment(now).subtract(2, 'days').toDate(), expected: '10 апреля в 17:42' },
-        { arg: moment(now).subtract(1, 'months').toDate(), expected: '12 марта в 17:42' },
-        { arg: moment(now).subtract(2, 'months').toDate(), expected: '12 февраля в 17:42' },
-        { arg: moment(now).subtract(1, 'years').toDate(), expected: '12 апреля 2017 года в 17:42' },
+        { arg: moment(now).subtract(2, 'days').toDate(), expected: '10 апреля в 12:42' },
+        { arg: moment(now).subtract(1, 'months').toDate(), expected: '12 марта в 12:42' },
+        { arg: moment(now).subtract(2, 'months').toDate(), expected: '12 февраля в 12:42' },
+        { arg: moment(now).subtract(1, 'years').toDate(), expected: '12 апреля 2017 года в 12:42' },
         { arg: moment(now).startOf('year').toDate(), expected: '01 января в 00:00' },
         { arg: {}, expected: 'Invalid date' },
         { arg: [], expected: 'Invalid date' },
