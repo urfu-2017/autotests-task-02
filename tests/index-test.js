@@ -7,14 +7,14 @@ describe('showTweets', () => {
     it('should print date and tweet', () => {
 	const formatDate = sinon.stub();
     formatDate.withArgs('2018-04-15T15:09:10.609Z').returns('вчера в 15:09');
-    formatDate.withArgs('2016-12-25T12:00:10.123Z').returns('25 марта 2017 года в 15:09');
+    formatDate.withArgs('2016-12-25T12:00:10.123Z').returns('25 марта 2016 года в 15:09');
     formatDate.throws('Illegal arguments');
 
     const showTweets = proxyquire('../lib/index', {
         './formatDate': formatDate
     });	
 	const actual = showTweets();
-	var result = "вчера в 15:09 Библиотека #nock позволяет не только удобно писать тесты, но и вести разработку фронтеда, в то время, когда бекенд ещё только проектируется! #urfu-testing-2017 25 марта 2017 года в 15:09 Для подмены модулей раньше я использовал #mockery, а сейчас всей душой полюбил #proxyquire. #urfu-testing-2017 Конец";
+	var result = "вчера в 15:09 Библиотека #nock позволяет не только удобно писать тесты, но и вести разработку фронтеда, в то время, когда бекенд ещё только проектируется! #urfu-testing-2017 25 марта 2016 года в 15:09 Для подмены модулей раньше я использовал #mockery, а сейчас всей душой полюбил #proxyquire. #urfu-testing-2017 Конец";
 	assert.equal(actual, result);
 	});
 });
