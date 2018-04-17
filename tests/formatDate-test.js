@@ -13,7 +13,7 @@ describe('formatDate', () => {
         assert.equal(actual, '15:19');
     });
     
-    it(`should return time with 'вчера' prefix for yesterday time`, () => {
+    it('should return time with \'вчера\' prefix for yesterday time', () => {
         const formatDate = proxyquire('../lib/formatDate', {
             './getTime': () => '15:19'
         });
@@ -30,8 +30,9 @@ describe('formatDate', () => {
             './getTime': () => '15:19'
         });
         
-        const checkDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 2); 
-        const actual = formatDate(checkDate);
+        const checkDate = new Date(2018, 2, 15, 21);
+        const fakeNowDate = new Date(2018, 3, 12, 21);
+        const actual = formatDate(checkDate, fakeNowDate);
         
         assert.equal(actual.split(' ').length, 4);
     });
@@ -49,18 +50,29 @@ describe('formatDate', () => {
         assert.equal(actual.split(' ')[2].length, 4);
     });
     
-    it('should return time with `день месяц год` prefix ' + 
+    it('should return time with `вчера` prefix ' + 
         'for yesterday time, but in previous year', () => {
         const formatDate = proxyquire('../lib/formatDate', {
             './getTime': () => '15:19',
-            'nowDate': new Date(2018, 0, 1, 21)
         });
     
         const checkDate = new Date(2017, 11, 31, 21);
         const fakeNowDate = new Date(2018, 0, 1, 21);
         const actual = formatDate(checkDate, fakeNowDate);
         
-        assert.equal(actual.split(' ').length, 6);
-        assert.equal(actual.split(' ')[2].length, 4);
+        assert.equal(actual, 'вчера в 15:19');
+    });
+    
+    it('should return time with \'вчера\' prefix ' + 
+        'for yesterday time, but in previous month', () => {
+        const formatDate = proxyquire('../lib/formatDate', {
+            './getTime': () => '15:19',
+        });
+    
+        const checkDate = new Date(2018, 2, 31, 21);
+        const fakeNowDate = new Date(2018, 3, 1, 21);
+        const actual = formatDate(checkDate, fakeNowDate);
+        
+        assert.equal(actual, 'вчера в 15:19');
     });
 });
