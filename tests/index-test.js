@@ -4,11 +4,11 @@ const sinon = require('sinon');
 const formatDate = require('../lib/formatDate');
 
 describe('showTweets', () => {  
-    it('should print Конец after tweets', () => {        
+    it('should print tweets', () => {        
         const formatDate = sinon.stub();
         formatDate.withArgs('2018-04-11T15:09:10.609Z').returns('11 апреля в 15:09');
         formatDate.withArgs('2016-12-25T12:00:10.123Z').returns('25 декабря 2016 года в 12:00');
-        formatDate.throws('Illegal arguments');
+        
         const print = sinon.spy();
         const showTweets = proxyquire(
             '../lib/index', {
@@ -69,5 +69,5 @@ describe('formatDate', () => {
     
             assert.throws(() => formatDate(anotherDate.toString()), /Future date/); 
         });
-    });      
+    });     
 });
