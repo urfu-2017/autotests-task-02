@@ -9,12 +9,12 @@ describe('index', () => {
             const formatDate = sinon.stub();
             formatDate.withArgs('2018-04-11T15:09:10.609Z').returns('11 апреля в 15:09');
             const print = sinon.spy();
-            const showTweets = proxyquire(
+            const index = proxyquire(
                 '../lib/index', {
                 './formatDate': formatDate,
                 './print': print}
             );
-            showTweets(); 
+            index(); 
             assert.ok(print.calledWith('11 апреля в 15:09' + '\n' + 'Библиотека #nock позволяет не только удобно писать тесты, ' +
             'но и вести разработку фронтеда, в то время, когда бекенд ещё ' +
             'только проектируется! #urfu-testing-2017'));          
@@ -23,12 +23,12 @@ describe('index', () => {
             const formatDate = sinon.stub();
             formatDate.withArgs('2016-12-25T12:00:10.123Z').returns('25 декабря 2016 года в 12:00');         
             const print = sinon.spy();
-            const showTweets = proxyquire(
+            const index = proxyquire(
                 '../lib/index', {
                 './formatDate': formatDate,
                 './print': print}
             );
-            showTweets();  
+            index();  
             assert.ok(print.calledWith('25 декабря 2016 года в 12:00' + '\n' + 'Для подмены модулей раньше я использовал #mockery, ' +
             'а сейчас всей душой полюбил #proxyquire. #urfu-testing-2017'));           
         });
@@ -36,7 +36,7 @@ describe('index', () => {
 });
 
 const formatDate = require('../lib/formatDate');
-describe('index', () => {
+describe('getDate', () => {
     describe('positiv',() => {
         it('should return `25 марта в 15:09` for 2018-03-25T15:09:10.609Z', () => {
             const actual = formatDate('2018-03-25T15:09:10.609Z');
