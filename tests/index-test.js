@@ -1,29 +1,44 @@
+'use strict'
 const proxyquire = require('proxyquire');
 const assert = require('assert');
 const sinon = require('sinon');
 
 describe('showTweets', () => {
 
-    it('should return 2 tweets', () => {
-           const print = sinon.spy();
-            let tweets = proxyquire('../lib/index', {
-                    './print': print,
+    it('should calls `formatDate` n times', () => {
+            const formatDate = sinon.spy();
+            proxyquire('../lib/index', {
                     './getTweets': () => [
-                    {
-                        "created_at": "15:09",
-                        "text": "Библиотека #nock позволяет не только удобно писать тесты, но и вести разработку фронтеда, в то время, когда бекенд ещё только проектируется! #urfu-testing-2017"
+                        {
+                            created_at: '',
+                            text: ''
                     },
                     {
-                        "created_at": "12:00",
-                        "text": "Для подмены модулей раньше я использовал #mockery, а сейчас всей душой полюбил #proxyquire. #urfu-testing-2017"
+                        created_at: '',
+                            text: ''
+                   },
+                    {
+                        created_at: '',
+                            text: ''
+                   },
+                    {
+                        created_at: '',
+                        text: ''
+                    },
+                    {
+                        created_at: '',
+                        text: ''
                     }
-                ]
+                ],
+
+                    './formatDate': formatDate
             })();
 
-                print(tweets);
-            sinon.assert.calledWith(print, sinon.match.array.deepEquals([]));
-        });
-    it('should return No tweets found', () => {
+                assert.equal(formatDate.callCount, 5);
+       });
+
+
+    it('should return empty tweet', () => {
         const print = sinon.spy();
     let tweets = proxyquire('../lib/index', {
             './print': print,
