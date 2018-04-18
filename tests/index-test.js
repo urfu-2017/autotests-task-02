@@ -37,25 +37,33 @@ describe('index', () => {
 
 const formatDate = require('../lib/formatDate');
 describe('getDate', () => {
+        var clock;    
+    beforeEach(() => {
+        clock = sinon.useFakeTimers(new Date(2018, 04, 18, 16).getTime());      
+    });
+    afterEach(() => {
+        clock.restore();
+    }) 
     describe('positiv',() => {
-        it('should return `25 марта в 15:09` for 2018-03-25T15:09:10.609Z', () => {
-            const actual = formatDate('2018-03-25T15:09:10.609Z');
+        it('should return `17 марта в 15:09` for 2018-03-25T15:09:10.609Z', () => {
+            const fakeDate = new Date(2018, 02, 17, 15+5, 09);   
+            const actual = formatDate(fakeDate.toISOString());
     
-            assert.equal(actual, '25 марта в 15:09');
+            assert.equal(actual, '17 марта в 15:09');
         });
         it('should return `15:09` for 2018-04-18T15:09:10.609Z', () => {
-            const actual = formatDate('2018-04-18T15:09:10.609Z');
-    
+            const fakeDate = new Date(2018, 03, 18, 15+5, 09);   
+            const actual = formatDate(fakeDate.toISOString());
             assert.equal(actual, '15:09');
         });
         it('should return `вчера в 15:09` for 2018-04-17T15:09:10.609Z', () => {
-            const actual = formatDate('2018-04-17T15:09:10.609Z');
-    
+            const fakeDate = new Date(2018, 03, 17, 15+5, 09);   
+            const actual = formatDate(fakeDate.toISOString());
             assert.equal(actual, 'вчера в 15:09');
         });
         it('should return `25 марта 2017 года в 15:09` for 2017-03-25T15:09:10.609Z', () => {
-            const actual = formatDate('2017-03-25T15:09:10.609Z');
-    
+            const fakeDate = new Date(2017, 02, 25, 15+5, 09);   
+            const actual = formatDate(fakeDate.toISOString());
             assert.equal(actual, '25 марта 2017 года в 15:09');
         });
     });
