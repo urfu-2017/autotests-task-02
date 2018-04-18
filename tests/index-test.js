@@ -20,7 +20,6 @@ describe('Проверка даты', () => {
         { date: moment().subtract(1, 'day').utc().format(), expected: `вчера в ${moment().format('HH:mm')}` },
         { date: moment().subtract(1, 'month').format(), expected: `${moment().subtract(1, 'month').locale('ru').format('DD MMMM [в] HH:mm')}`},
         { date: moment().subtract(1, 'year').format(), expected: `${moment().subtract(1, 'year').locale('ru').format('DD MMMM YYYY [года в] HH:mm')}`},
-        { date:'2016-10-05T12:00:10.123Z', expected: '05 октября 2016 года в 17:00'},
         ].forEach(({ date, expected }) =>
             it(`should return ${expected} for ${date}`, () => {
                 const actual = formatDate(date);
