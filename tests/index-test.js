@@ -1,4 +1,4 @@
-const { spy } = require('sinon');
+const { spy, stub } = require('sinon');
 const assert = require('assert');
 const proxyquire = require('proxyquire');
 
@@ -16,7 +16,7 @@ describe('showTweets', () => {
         assert.ok(getTweets.calledOnce);
     });
     
-    it('should print tweets n times', () => {
+    it('should print tweets only once', () => {
         const print = spy();
         
         const showTweets = proxyquire('../lib/index', {
@@ -64,6 +64,14 @@ describe('showTweets', () => {
         })();
         
         assert.equal(formatDate.callCount, 3);
+    });
+    
+    it('should return 1 in real time intepretated `main()`', () => {
+        const showTweets = proxyquire('../lib/index', {
+            './print': () => 1   
+        })();
+        
+        assert.equal(showTweets, 1);
     });
 });
 
