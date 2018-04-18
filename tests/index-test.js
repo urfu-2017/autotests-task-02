@@ -27,10 +27,7 @@ function runSuccessTest(date, expected){
 }
     describe('formatDate', () => {
 
-        it('should throw new Error \'Incorrect date\' for date \'5 января\'', () => {
-            const actual= () => formatDate('5 января');
-            assert.throws(actual, /Incorrect date/);
-        });
+
         it('should throw new Error \'Incorrect day\' for date \'2018-04-44T15:09:10.609Z\'', () => {
             const actual= () => formatDate('2018-04-44T15:09:10.609Z');
             assert.throws(actual, /Incorrect day/);
@@ -55,11 +52,7 @@ function runSuccessTest(date, expected){
             const actual= () => formatDate('2018-04-14T15:60:10.609Z');
             assert.throws(actual, /Incorrect time/);
         });
-        it('should throw new Error \'Future date\' for date \'2019-03-12T15:09:10.609Z\'', () => {
-            const actual= () => formatDate('2019-03-12T15:09:10.609Z');
-            assert.throws(actual, /Future date/);
-        });
-        it('should throw new Error \'Future year\' for date \'2019-04-14T15:09:10.609Z\'', () => {
+         it('should throw new Error \'Future year\' for date \'2019-04-14T15:09:10.609Z\'', () => {
             const actual= () => formatDate('2019-04-14T15:09:10.609Z');
             assert.throws(actual, /Future year/);
         });
@@ -71,15 +64,15 @@ function runSuccessTest(date, expected){
             const actual= () => formatDate('2018-04-30T15:09:10.609Z');
             assert.throws(actual, /Future day/);
         });
-        it('should throw new Error \'Future time\' for date \'2018-04-44T23:09:10.609Z\'', () => {
-            const actual= () => formatDate('2018-04-44T15:09:10.609Z');
+        it('should throw new Error \'Future time\' for date \'2018-04-14T23:09:10.609Z\'', () => {
+            const actual= () => formatDate('2018-04-14T15:09:10.609Z');
             assert.throws(actual, /Future time/);
         });
 
-        it('should print Only time for today', runSuccessTest('2018-04-18T15:09:10.609Z',"15:09"));
+        it('should print Only time for today', runSuccessTest('2018-04-18T10:09:10.609Z',"10:09"));
         it('should print yesterday and time for yesterday', runSuccessTest('2018-04-17T15:09:10.609Z',"вчера в 15:09"));
-        it('should not print years for this year', runSuccessTest('2018-02-15T15:09:10.609Z', "25 марта в 15:09"));
-        it('should print all for previous year', runSuccessTest('2017-03-25T16:09:10.609Z', "25 марта 2017 года в 16:09"));
+        it('should not print years for this year', runSuccessTest('2018-02-15T15:09:10.609Z', "15 февраля в 15:09"));
+        it('should print all for previous year', runSuccessTest('2017-03-25T16:09:10.609Z', "25.03.2017 года в 16:09"));
 
     });
 
