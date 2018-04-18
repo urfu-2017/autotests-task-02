@@ -6,11 +6,12 @@ describe('showTweets', () => {
     it('should calls getTweets function once', () => {
         const getTweets = spy();        
         
-        const showTweets = proxyquire('../lib/index', {
+        const tweets = proxyquire('../lib/index', {
             './getTweets': getTweets,
             './formatDate': () => 0,
             './print': () => 0
-        })();
+        })
+        tweets();
 
         assert.ok(getTweets.calledOnce);
     });
