@@ -65,7 +65,7 @@ function runSuccessTest(date, expected){
             assert.throws(actual, /Future day/);
         });
         it('should throw new Error \'Future time\' for date \'2018-04-14T23:09:10.609Z\'', () => {
-            const actual= () => formatDate('2018-05-14T15:09:10.609Z');
+            const actual= () => formatDate('2018-05-20T15:09:10.609Z');
             assert.throws(actual, /Future time/);
         });
 
