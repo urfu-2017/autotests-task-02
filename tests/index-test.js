@@ -64,6 +64,10 @@ describe('getDate', () => {
 
             assert.throws(() => formatDate(''), /Erroe with type of date/);
         });
+        it('throw `Error empty value`', () => {    
+
+            assert.throws(() => formatDate(), /Error empty value/);
+        });
         it('throw `Error with date, day = 32 month = 03 year = 2017', () => {    
 
             assert.throws(() => formatDate('2017-03-32T15:09:10.609Z'), /Error with date, day = 32 month = 3 year = 2017/);
