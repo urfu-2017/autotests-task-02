@@ -2,8 +2,6 @@ const proxyquire = require('proxyquire');
 const assert = require('assert');
 const sinon = require('sinon');
 const formatDate = require('../lib/formatDate');
-const showTweets = require('../lib/index');
-
 
 //describe('showTweets', () => {
     /* Этот тест написан для примера, его можно удалить
