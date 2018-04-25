@@ -26,15 +26,17 @@ describe('formatDate', () => {
         );
     });
 
-    describe('Negative tests', () => {
+    describe('negative', () => {
         [
-            { date: "", error: "Date is not valid" },
-            { date: "1994-13-31T00:00:00.000Z", error: "Date is not valid" },
-            { date: "9999-12-31T00:00:00.000Z", error: "Tweet from future"}
-        ].forEach(({ date, error }) =>
-                it(`should throw "${error}" for "${date}"`, () => {
-                assert.throws(() => formatDate(new Date(date)), error);
-            }));
+            { date: "", expected: /Date is not valid/ },
+            { date: "1994-13-31T00:00:00.000Z", expected: /Date is not valid/ },
+            { date: "9999-12-31T00:00:00.000Z", expected: /Tweet from future/ }
+            ].forEach(({date, expected}) => {
+            it(`should print '${expected}' for ${date}`, () => {
+                const actual = () => formatDate(date);
+                assert.throws(actual, expected);
+            });
+        });
     });
 
     after(() => {
