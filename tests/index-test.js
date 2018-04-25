@@ -15,4 +15,3 @@ describe('showTweets', () => {
         assert.equal(print.callCount, 4);
     });
 });
-
