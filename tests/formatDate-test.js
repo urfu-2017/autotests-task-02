@@ -13,7 +13,7 @@ describe('Проверка даты', () => {
         try {
             formatDate(date);
         } catch (error) {
-            assert.equal(error.message, 'Not valid date');
+            assert.equal(error.message, expected);
         }
     }));
 
@@ -24,7 +24,6 @@ describe('Проверка даты', () => {
         { date: moment(today).subtract(1, 'day').utc().format(), expected: `вчера в ${moment(today).format('HH:mm')}` },
         { date: moment(today).subtract(1, 'month').format(), expected: `${moment(today).subtract(1, 'month').locale('ru').format('DD MMMM [в] HH:mm')}`},
         { date: moment(today).subtract(1, 'year').format(), expected: `${moment(today).subtract(1, 'year').locale('ru').format('DD MMMM YYYY [года в] HH:mm')}`},
-        { date : '2016-12-25T12:00:10.123Z', expected : '25 декабря 2016 года в 17:00'},
         ].forEach(({ date, expected }) =>
             it(`should return ${expected} for ${date}`, () => {
                 const actual = formatDate(date);
