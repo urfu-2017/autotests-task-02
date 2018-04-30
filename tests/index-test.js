@@ -76,4 +76,10 @@ describe('formatDate', () => {
             assert.equal(formatted, d.actual);
         });
 	});
+	
+	it('should throw on invalid date', () => {
+	    const formatDate = require('../lib/formatDate');
+	    var res = () => formatDate('invalid');
+	    assert.throws(res, Error);
+	});
 });
