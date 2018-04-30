@@ -65,9 +65,8 @@ describe('formatDate', () => {
 	const yesterdayFormatted = yesterday.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
 	const someDayThisYearFormatted = someDayThisYear.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
 	const someDayAnotherYearFormatted = someDayThisYear.year(1000).format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
-	const invalidDate = 'asd';
     const dates = [{date: todayFormatted, actual: "12:10"}, {date: yesterdayFormatted, actual: "вчера в 12:10"}, 
-	    {date: someDayThisYearFormatted, actual: "01 апреля в 12:10"}, {date: someDayAnotherYearFormatted, actual: "01 апреля 1000 года в 12:10"}, {date: invalidDate, actual: ''}];
+	    {date: someDayThisYearFormatted, actual: "01 апреля в 12:10"}, {date: someDayAnotherYearFormatted, actual: "01 апреля 1000 года в 12:10"}];
 	dates.forEach(d => {
         it(`should return ${d.actual} for ${d.date}`, () => {
 			const formatDate = require('../lib/formatDate');
