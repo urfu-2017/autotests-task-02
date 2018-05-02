@@ -9,9 +9,9 @@ describe('formatDate', () => {
     });
 
     [
-        { date: '', expected: 'Не корректная дата!' },
-        { date: 'aaaa', expected: 'Не корректная дата!' },
-        { date: '2019-11-05T00:00:00.123Z', expected: 'Дата будущего!' }
+        { date: '', expected: /Не корректная дата!/ },
+        { date: 'aaaa', expected: /Не корректная дата!/ },
+        { date: '2019-11-05T00:00:00.123Z', expected: /Дата будущего!/ }
     ].forEach(({ date, expected }) =>
         it(`should throw error '${expected}' for '${date}'`, ()=> {
             assert.throws(() => formatDate(date), expected);
