@@ -7,7 +7,7 @@ const tk = require('timekeeper');
 const formatDate = require('../lib/formatDate');
 
 describe('formatDate', () => {
-    const now = new Date('2018.04.12 12:42:08.232').getTime(); // 2018.04.12 12:42:08.232
+    const now = new Date('2018.04.12 12:42:08.232').getTime();
     const testCases = [
         { arg: now, expected: '12:42' },
         { arg: moment(now).startOf('day').toDate(), expected: '00:00' },
