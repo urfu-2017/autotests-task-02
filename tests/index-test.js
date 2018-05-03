@@ -43,3 +43,21 @@ describe('formatDate', () => {
         clock.restore();
     });
 });
+
+describe("showTweets", () => {
+    it("should print tweets", () => {
+        const print = sinon.spy();
+        const showTweets = proxyquire(
+            "../lib/index",
+            {
+                "./print": print,
+            }
+        );
+        showTweets();
+        assert.ok(print.firstCall.calledWithExactly("11 апреля в 15:09"));
+        assert.ok(print.secondCall.calledWithExactly('Библиотека #nock позволяет не только удобно писать тесты, ' +
+        'но и вести разработку фронтеда, в то время, когда бекенд ещё ' +
+        'только проектируется! #urfu-testing-2017'));
+        assert.equal(print.callCount, 4);
+    });
+});
