@@ -54,6 +54,14 @@ describe("showTweets", () => {
             "../lib/index",
             {
                 "./print": print,
+                "./getTweets": () => [
+                    {
+                        created_at: "2018-04-11T15:09:10.609Z",
+                        text: 'Библиотека #nock позволяет не только удобно писать тесты, ' +
+                        'но и вести разработку фронтеда, в то время, когда бекенд ещё ' +
+                        'только проектируется! #urfu-testing-2017'
+                    }
+                ]
             }
         );
         showTweets();
@@ -61,7 +69,7 @@ describe("showTweets", () => {
         assert.ok(print.secondCall.calledWithExactly('Библиотека #nock позволяет не только удобно писать тесты, ' +
         'но и вести разработку фронтеда, в то время, когда бекенд ещё ' +
         'только проектируется! #urfu-testing-2017'));
-        assert.equal(print.callCount, 4);
+        assert.equal(print.callCount, 2);
     });
     after(() => {
         clock.restore();
