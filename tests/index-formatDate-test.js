@@ -1,30 +1,6 @@
-const proxyquire = require('proxyquire');
 const assert = require('assert');
 const sinon = require('sinon');
 const formatDate = require('../lib/formatDate');
-
-describe('showTweets', () => {
-    it('should print date and tweet', () => {
-        const formatDate = sinon.stub();
-        const print = sinon.spy();
-        formatDate.withArgs('2018-04-11T15:09:10.609Z').returns('вчера в 15:09');
-        formatDate.withArgs('2016-12-25T12:00:10.123Z').returns('25 марта 2016 года в 15:09');
-        formatDate.throws('Illegal arguments');
-
-        const showTweets = proxyquire('../lib/index', {
-            './formatDate': formatDate,
-            './print': print,
-        });
-        showTweets();
-
-        var correct = "вчера в 15:09\n" +
-            "Библиотека #nock позволяет не только удобно писать тесты, но и вести разработку фронтеда, в то время, когда бекенд ещё только проектируется! #urfu-testing-2017\n\n" +
-            "25 марта 2016 года в 15:09\n" +
-            "Для подмены модулей раньше я использовал #mockery, а сейчас всей душой полюбил #proxyquire. #urfu-testing-2017\n\n";
-        assert.ok(print.calledOnce);
-        assert.ok(print.calledWith(correct));
-        });
-});
 
 function runSuccessTest(date, expected) {
     return () => {
@@ -35,41 +11,54 @@ function runSuccessTest(date, expected) {
 }
 
 describe('formatDate positive', () => {
-    var date;
-    beforeEach(() => {
-        date = new Date();
+    let clock;
+
+    afterEach(() => {
+        if (clock) {
+            clock.restore();
+        }
     });
 
     it('should return current time for now', () => {
-        runSuccessTest(date.toString(), date.toLocaleString("ru", {hour: 'numeric', minute: 'numeric'}));
+        const date = new Date();
+        runSuccessTest(date, date.toLocaleString("ru", {hour: 'numeric', minute: 'numeric'}));
     });
 
 
     it('should return `00:00` for today at midnight', () => {
-        date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0);
-        runSuccessTest(date.toString(), '00:00');
+        const date = new Date();
+        const tweetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0);
+        runSuccessTest(tweetDate, '00:00');
     });
 
     it('should return `вчера в 23:59` for yesterday at 11:59 p.m.', () => {
-        date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1, 23, 59);
-        runSuccessTest(date.toString(), 'вчера в 23:59');
+        const startDate = new Date(2018, 4, 15).getTime();
+        clock = sinon.useFakeTimers(startDate);
+
+        const tweetDate = new Date(2018, 4, 14, 23, 59);
+        runSuccessTest(tweetDate, 'вчера в 23:59');
     });
 
     it('should return `вчера в 00:00` for yesterday midnight', () => {
-        date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1, 0, 0);
-        runSuccessTest(date.toString(), 'вчера в 00:00');
+        const startDate = new Date(2018, 3, 20).getTime();
+        clock = sinon.useFakeTimers(startDate);
+
+        const tweetDate = new Date(2018, 3, 19, 0, 0);
+        runSuccessTest(tweetDate, 'вчера в 00:00');
     });
 
     it('should return `1 января в 00:00` for 1 January this year', () => {
+        const date = new Date();
         date.setMonth(0, 1);
         date.setHours(0, 0);
         runSuccessTest(date.toString(), '1 января в 00:00');
     });
 
-    it('should return `31 декабря ' + ((new Date()).getFullYear() - 1) + ' года в 23:59` for 31 December last year', () => {
-        date.getFullYear(date.getFullYear() - 1, 11, 31);
-        date.setHours(23, 59);
-        runSuccessTest(date.toString(), '31 декабря ' + date.getFullYear() + 'года в 23:59');
+    it('should return `31 декабря 2017 года в 23:59` for 31 December last year', () => {
+        const startDate = new Date(2018, 1, 1).getTime();
+        clock = sinon.useFakeTimers(startDate);
+
+        runSuccessTest('2017-12-31T00:00:00.123Z', '31 декабря 2017 года в 23:59');
     });
 
     it('should return `25 июля 2016 года в 12:00` for 2016-07-25T12:00:10.123Z', () => {
