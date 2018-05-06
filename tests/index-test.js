@@ -9,14 +9,7 @@ const cases = [
         [
         ],
         expected: ""
-    }, 
-    {
-        tweets: 
-        [
-            { created_at: "home", text: "Tweet" }
-        ],
-        expected: "home\nTweet"
-    }, 
+    },
     {
         tweets: 
         [
@@ -24,15 +17,6 @@ const cases = [
             { created_at: "home", text: "Tweet" }
         ],
         expected: "home\nTweet\n\nhome\nTweet"
-    },
-    {
-        tweets: 
-        [
-            { created_at: "home", text: "Tweet" },
-            { created_at: "home", text: "Tweet" },
-            { created_at: "home", text: "Tweet" }
-        ],
-        expected: "home\nTweet\n\nhome\nTweet\n\nhome\nTweet"
     }
     
 ]
@@ -40,7 +24,7 @@ const cases = [
 
 function MockedIndex(tweets) {
     this.print = sinon.spy()
-    this.formatDate = function id(e) { return e }
+    this.formatDate = date => date
     this.getTweets = () => tweets
     this.index = proxyquire(
         '../lib/index',
@@ -92,6 +76,23 @@ describe('index tests', () => {
                     let callIndex = actualCallCount - 1
 
                     assert.equal(actualCallCount, expectedCallCount)
+                }
+            })
+
+            it('should print one right letter every time', () => {
+                const { index, print } = new MockedIndex(tweets)
+
+                index.showTweetsTicker()
+
+                let expectedCallCount = 0
+
+                while (expectedCallCount != expected.length) {
+                    clock.tick(99)
+
+                    clock.tick(1)
+                    expectedCallCount += 1
+                    let actualCallCount = print.callCount
+                    let callIndex = actualCallCount - 1
 
                     let spyCallArg = print.getCall(callIndex).args[0]
 
@@ -158,10 +159,9 @@ describe('index tests', () => {
 
         describe('years before 1970', () => {
             ifTodayIs(bicycleDay).itShouldFormate('1943-04-18T16:19:00.609Z').as('вчера в 16:19')
-            ifTodayIs(bicycleDay).itShouldFormate('1943-04-18T16:21:00.609Z').as('вчера в 16:21')
         })
 
-        describe('display of `вчера`', () => {
+        describe('Word `вчера` is correctly displayed', () => {
             ifTodayIs(bicycleDay).itShouldFormate('1943-04-19T00:00:00.609Z').as('в 00:00')
             ifTodayIs(bicycleDay).itShouldFormate('1943-04-18T23:59:00.609Z').as('вчера в 23:59')
             ifTodayIs(bicycleDay).itShouldFormate('1943-04-18T00:00:00.609Z').as('вчера в 00:00')
