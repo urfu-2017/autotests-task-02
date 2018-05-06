@@ -7,14 +7,11 @@ const today = moment();
 
 describe('Проверка даты', () => {
     [
+        { date : '2019-01-05T12:00:10.123Z', expected : 'Not valid date'},
         { date: '', expected: 'Not valid date' },
         { date: 'Дата', expected: 'Not valid date' },].forEach(({ date, expected }) =>
     it(`should throw error '${expected}' for '${date}'`, ()=> {
-        try {
-            formatDate(date);
-        } catch (error) {
-            assert.equal(error.message, expected);
-        }
+        assert.throws(() => formatDate(date), expected);
     }));
 
     [
@@ -24,6 +21,7 @@ describe('Проверка даты', () => {
         { date: moment(today).subtract(1, 'day').utc().format(), expected: `вчера в ${moment(today).format('HH:mm')}` },
         { date: moment(today).subtract(1, 'month').format(), expected: `${moment(today).subtract(1, 'month').locale('ru').format('DD MMMM [в] HH:mm')}`},
         { date: moment(today).subtract(1, 'year').format(), expected: `${moment(today).subtract(1, 'year').locale('ru').format('DD MMMM YYYY [года в] HH:mm')}`},
+        { date : '2016-12-25T12:00:10.123Z', expected : '25 декабря 2016 года в 17:00'},
         ].forEach(({ date, expected }) =>
             it(`should return ${expected} for ${date}`, () => {
                 const actual = formatDate(date);
