@@ -7,6 +7,9 @@ describe('showTweets', () => {
     it('should calls `print` one time', () => {
         const print = sinon.spy();
         proxyquire('../lib/index', {
+            './getTweets': () => [],
+            './formatDate': () => '',
+            './creepingLine': () => '',
             './print': print
         })();
 
@@ -30,7 +33,8 @@ describe('showTweets', () => {
                     text: ''
                 }
             ],
-
+            './print': () => '',
+            './creepingLine': () => '',
             './formatDate': formatDate
         })();
 
@@ -39,13 +43,13 @@ describe('showTweets', () => {
 
     it('should return empty array if there aren`t tweets', () => {
         const print = sinon.spy();
-        const tweets = proxyquire('../lib/index', {
-            './print': print,
-            './getTweets': () => []
+        proxyquire('../lib/index', {
+            './creepingLine': () => '',
+            './formatDate': () => '',
+            './getTweets': () => [],
+            './print': print
         })();
 
-        print(tweets);
         sinon.assert.calledWith(print, sinon.match.array.deepEquals([]));
     });
-
 });

@@ -4,15 +4,15 @@ const formatDate = require('../lib/formatDate');
 
 describe('formatDate', () => {
     describe('positive', () => {
-        const thisDay = time.DateTime.local();
+        const currentDate = time.DateTime.local(2018, 5, 7, 15, 10);
         [
-            { date: thisDay.set({ hour: 15, minute: 59}), expected: '15:59' },
-            { date: thisDay.set({ day: thisDay.day - 1, hour: 15, minute: 58}).toISO(), expected: 'вчера в 15:58' },
-            { date: thisDay.set({ day: 3, month: 2, hour: 15, minute: 58}).toISO(), expected: '3 февраля в 15:58' },
-            { date: '2017-03-25T16:09:10.609Z', expected: '25 марта 2017 года в 16:09' }
+            { date: currentDate.set({ hour: 12, minute: 59 }), expected: '12:59' },
+            { date: currentDate.set({ day: 6, hour: 12, minute: 59 }), expected: 'вчера в 12:59' },
+            { date: currentDate.set({ day: 1, month: 1 }), expected: '1 января в 15:10' },
+            { date: currentDate.set({ year: 2017 }), expected: '7 мая 2017 года в 15:10' }
         ].forEach(({ date, expected }) =>
             it(`should return ${expected} for ${date}`, () => {
-                const actual = formatDate(date);
+                const actual = formatDate(date.toISO(), currentDate.toISO());
                 assert.equal(actual, expected);
             })
         );
