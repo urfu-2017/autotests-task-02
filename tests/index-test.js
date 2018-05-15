@@ -52,4 +52,29 @@ describe('showTweets', () => {
 
         sinon.assert.calledWith(print, sinon.match.array.deepEquals([]));
     });
+
+    it('should print tweets', () => {
+        const print = sinon.spy();
+        proxyquire('../lib/index', {
+            './creepingLine': () => '',
+            './formatDate': date => date,
+            './getTweets': () =>  [
+                {
+                    created_at: '1',
+                    text: 'qq'
+                },
+                {
+                    created_at: '2',
+                    text: 'ww'
+                }
+            ],
+            './print': print
+        })();
+
+        sinon.assert.calledWith(print, sinon.match([
+                { created_at: "1", text: "qq" },
+                { created_at: "2", text: "ww" }
+            ])
+        );
+    });
 });

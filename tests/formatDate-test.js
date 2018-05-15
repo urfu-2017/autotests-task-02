@@ -20,7 +20,7 @@ describe('formatDate', () => {
 
     describe('negative', () => {
         const thisDay = time.DateTime.local();
-        it(`should throw error when date for invalid date time`, () => {
+        it(`should throw error for invalid date time`, () => {
             const actual = () => formatDate(['207-0-25T16:0:10.60']);
             assert.throws(actual, 'invalid date time');
         })

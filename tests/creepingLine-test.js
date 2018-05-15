@@ -12,12 +12,13 @@ describe('creepingLine', () => {
     });
 
     it('should print letters one by one', done => {
+        const spy = sinon.spy(process.stdout, 'write');
         creepingLine('Библиотека #nock позволяет не только удобно писать тесты, ' +
         'но и вести разработку фронтеда, в то время, когда бекенд ещё ' +
         'только проектируется! #urfu-testing-2017', () => {
-            assert.equal(process.stdout.write.callCount, 91);
+            assert.equal(spy.callCount, 159);
+            done();
         });
-        done();
-        clock.tick(10000);
+        clock.tick(30000);
     });
 })
