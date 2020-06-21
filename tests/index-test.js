@@ -45,6 +45,9 @@ describe('formatDate', () => {
 });
 
 describe("showTweets", () => {
+    before(() => {
+        clock = sinon.useFakeTimers(NOW);
+    });
     it("should print tweets", () => {
         const print = sinon.spy();
         const showTweets = proxyquire(
@@ -59,5 +62,8 @@ describe("showTweets", () => {
         'но и вести разработку фронтеда, в то время, когда бекенд ещё ' +
         'только проектируется! #urfu-testing-2017'));
         assert.equal(print.callCount, 4);
+    });
+    after(() => {
+        clock.restore();
     });
 });
